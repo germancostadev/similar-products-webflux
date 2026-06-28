@@ -1,7 +1,8 @@
-#Backend dev technical test SOLUTION
-The solution presented is a springboot application that exposes a reactive REST API on port 3001
+# Backend dev technical test SOLUTION
 
-#How to run the application
+The solution presented is a springboot application that exposes a reactive REST API on port 5000
+
+# How to run the application
 
 Clone the repository
 Navigate to the project directory
