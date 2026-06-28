@@ -20,7 +20,7 @@ docker build -t similar-products .
 Run the application
 
 ```
-docker run -p 5000:5000 similar-products
+docker run -p 5000:5000 -e EXTERNAL_SIMILAR_PRODUCTS_BASE_URL=http://host.docker.internal:3001 similar-products
 ```
 
 Curl test
@@ -28,12 +28,6 @@ Curl test
 ```
 curl -X GET "http://localhost:5000/product/1/similar" \
 -H "Accept: application/json"
-```
-
-If you want to use Docker's internal network
-
-```
-docker run -p 5000:5000 -e EXTERNAL_SIMILAR_PRODUCTS_BASE_URL=http://host.docker.internal:3001 similar-products
 ```
 
 Note: This API and DTOs are generated automatically using OpenAPI Generator. It can be regenerated
