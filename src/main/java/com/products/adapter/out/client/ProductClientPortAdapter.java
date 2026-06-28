@@ -25,7 +25,6 @@ public class ProductClientPortAdapter implements ProductClientPort {
   private final WebClient webClient;
 
   @Override
-  @Cacheable(value = "similar-products", key = "#productId")
   public Flux<String> getSimilarProductIds(String productId) {
     return webClient.get()
         .uri("/product/{id}/similarids", productId)
