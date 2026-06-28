@@ -32,3 +32,10 @@ If you want to use Docker's internal network
 ```
 docker run -p 5000:5000 -e EXTERNAL_SIMILAR_PRODUCTS_BASE_URL=http://host.docker.internal:3001 similar-products
 ```
+
+Note: This API and DTOs are generated automatically using OpenAPI Generator. It can be regenerated
+using the following command:
+
+```
+mvn clean generate-sources
+```
