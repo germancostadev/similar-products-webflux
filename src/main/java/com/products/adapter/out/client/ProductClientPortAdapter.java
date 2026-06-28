@@ -25,6 +25,7 @@ public class ProductClientPortAdapter implements ProductClientPort {
   private final WebClient webClient;
 
   @Override
+  @Cacheable(value = "similar-products", key = "#productId")
   public Flux<String> getSimilarProductIds(String productId) {
     return webClient.get()
         .uri("/product/{id}/similarids", productId)
@@ -51,8 +52,5 @@ public class ProductClientPortAdapter implements ProductClientPort {
           }
           return Mono.error(throwable);
         });
-//        .onErrorResume(WebClientResponseException.NotFound.class, e -> Mono.empty())
-//        .onErrorResume(WebClientResponseException.InternalServerError.class, e -> Mono.empty())
-//        .onErrorResume(TimeoutException.class, e -> Mono.empty());
   }
 }
