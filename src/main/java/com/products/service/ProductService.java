@@ -20,6 +20,6 @@ public class ProductService implements ProductUseCase {
     return productClientPort
         .getSimilarProductIds(productId)
         .flatMap(
-            productClientPort::getProductDetail);
+            productClientPort::getProductDetail, 20);
   }
 }

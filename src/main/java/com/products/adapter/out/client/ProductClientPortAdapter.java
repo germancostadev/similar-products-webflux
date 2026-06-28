@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.concurrent.TimeoutException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -34,15 +35,24 @@ public class ProductClientPortAdapter implements ProductClientPort {
   }
 
   @Override
+  @Cacheable(value = "product-detail", key = "#productId")
   public Mono<Product> getProductDetail(String productId) {
     return webClient.get()
         .uri("/product/{id}", productId)
         .retrieve()
         .bodyToMono(ProductDetail.class)
-        .timeout(Duration.ofSeconds(2))
         .map(ExternalProductMapper::toDomain)
-        .onErrorResume(WebClientResponseException.NotFound.class, e -> Mono.empty())
-        .onErrorResume(WebClientResponseException.InternalServerError.class, e -> Mono.empty())
-        .onErrorResume(TimeoutException.class, e -> Mono.empty());
+        .timeout(Duration.ofSeconds(2))
+        .onErrorResume(throwable -> {
+          if (throwable instanceof TimeoutException
+              || throwable instanceof WebClientResponseException.NotFound
+              || throwable instanceof WebClientResponseException.InternalServerError) {
+            return Mono.empty();
+          }
+          return Mono.error(throwable);
+        });
+//        .onErrorResume(WebClientResponseException.NotFound.class, e -> Mono.empty())
+//        .onErrorResume(WebClientResponseException.InternalServerError.class, e -> Mono.empty())
+//        .onErrorResume(TimeoutException.class, e -> Mono.empty());
   }
 }
