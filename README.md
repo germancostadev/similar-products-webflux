@@ -2,6 +2,9 @@
 
 The solution presented is a springboot application that exposes a reactive REST API on port 5000
 
+Before continuing, make sure you have set up initial repository
+https://github.com/dalogax/backendDevTest/blob/main/readme.md?plain=1
+
 # How to run the application
 
 Clone the repository
