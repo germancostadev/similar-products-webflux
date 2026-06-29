@@ -30,9 +30,18 @@ curl -X GET "http://localhost:5000/product/1/similar" \
 -H "Accept: application/json"
 ```
 
-Note: This API and DTOs are generated automatically using OpenAPI Generator. It can be regenerated
-using the following command:
+Notes:
+
+- This API and DTOs are generated automatically using OpenAPI Generator. It can be regenerated
+  using the following command:
 
 ```
 mvn clean generate-sources
+```
+
+- Maven is required
+- SwaggerUI is not supported by springboot4 yet. The API definition can be checked in
+
+```
+http://localhost:5000/v3/api-docs
 ```
